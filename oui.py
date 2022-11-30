@@ -15,4 +15,17 @@ def create_filter_cheby(wp, ws, gpass, gstop, fs):
     plt.show()
     return B, A
 
-create_filter_cheby(8000, 10000, 1, 60, 44100)
+#create_filter_cheby(8000, 10000, 1, 60, 44100)
+
+def create_filter_cauer(wp, ws, gpass, gstop, fs):
+
+    # your code here #
+    B, A = signal.ellip(8, wp, ws, gstop, btype="lowpass", analog=False, output="ba", fs=fs)
+
+    return B, A
+
+b, a = create_filter_cauer(0.1, 60, 0, 8000, 44100)
+w, h = signal.freqz(b, a, 2048, fs=44100)
+h = 20 * np.log10(abs(h))
+plt.plot(w, h)
+plt.show()
